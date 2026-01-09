@@ -2,6 +2,7 @@ import magiccube
 from magiccube import BasicSolver
 import random
 from scramble import Scramble
+import printing
 
 moves = ["R","R'","R2","L","L'","L2","U","U'","U2","D","D'","D2","F","F'","F2","B","B'","B2"]
 
@@ -47,11 +48,7 @@ edge_piece_locations = {
 }
 
 
-def print_all_pieces():
-    for i in range(3):
-        for j in range(3):
-            for k in range(3):
-                print(i,",",j,",",k,": ", cube.get_piece((i,j,k)), "\n")
+
 
 
 
@@ -63,19 +60,10 @@ scramble = Scramble(20, moves)
 print(scramble.scramble)
 
 
-
-
+printing.print_all_pieces(cube)
 print(cube)
-for n in range(3):
-    for i in range(3):
-        for k in range(3):
-            print(f"piece {n},{i},{k}: ", cube.get_piece((n,i,k)))
-
 
 cube.rotate(scramble.scramble)
 print("\nSCRAMBLING\n")
 print(cube)
-for n in range(3):
-    for i in range(3):
-        for k in range(3):
-            print(f"piece {n},{i},{k}: ", cube.get_piece((n,i,k)))
+printing.print_all_pieces(cube)
