@@ -1,0 +1,16 @@
+For piece coordinates, starting with green front and white top (x,y,z)
+first digit X reperesents column from front left to right
+second digit z represents row from front bottom to top          
+third digit y represents layer from back to front
+
+back bottom left is 0,0,0
+core is 1,1,1
+top front right is 2,2,2
+
+get_piece returns the piece as a string from position x,y,z.
+If x is 0 or 2 the first letter will be what is on either the left or right faces
+If x is 1 then there will only be maximum two letters because in the core column
+
+If numbers contains only 0s or 2s its a corner.
+If contains one 1 its a edge
+If it has multiple 1s its a center piece
