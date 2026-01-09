@@ -4,12 +4,12 @@ import dictionaries as dict
 # Finds the corner sequence
 def solve_corners(cube):
     solved = False
-    parity = False
+    unsolved_pieces_present = False
     # initialize position, piece, and significant side
-    current_x = 0
-    current_y = 2
-    current_z = 0
-    current_position = (current_x, current_y, current_z)
+    starting_x = 0
+    starting_y = 2
+    starting_z = 0
+    current_position = (starting_x, starting_y, starting_z)
     current_piece = cube.get_piece(current_position)
     significant_pos = "horizontal"
     return_letters = []
@@ -18,8 +18,22 @@ def solve_corners(cube):
 
     # while not solved keep looking
     while not solved:
+        '''
+        if unsolved_pieces_present:
+            unsolved_position = find_unsolved_piece(cube)
+
+            current_position = unsolved_position
+            significant_pos = find_significant_pos(current_piece, significant_pos)
+            current_piece = cube.get_piece(current_position)
+            return_letters.append(convert_piece_to_letter(current_piece, significant_pos))
+            unsolved_pieces_present = False
+        '''
+        #else:
         # get next piece location, piece, and significant side data
-        current_position = find_next_position(current_piece)
+        if unsolved_pieces_present:
+            current_position = find_unsolved_piece(cube)
+        else:
+            current_position = find_next_position(current_piece)
         significant_pos = find_significant_pos(current_piece, significant_pos)
         current_piece = cube.get_piece(current_position)
         return_letters.append(convert_piece_to_letter(current_piece, significant_pos))
@@ -27,19 +41,26 @@ def solve_corners(cube):
         # check if done or unsolved pieces present
         if return_letters[-1] in ("E"):
             solved = True
-            print("\nSUCCESS\n")
+            #print("\nSUCCESS\n")
             # delete last 'E' letter
             del return_letters[-1]
             break
+            '''
+            unsolved_position_return = find_unsolved_piece(cube)
+            
+            if unsolved_position_return is None:
+                break
+            else:
+                unsolved_pieces_present
+            '''
+
         # unsolved pieces present
         elif return_letters[-1] in ("A", "R"):
-            parity = True
-
+            unsolved_pieces_present = True
             # TEMPORARY SO THE PROGRAM TERMINATES
-            solved = True
+            #solved = True
 
-            print("UNSOLVED PIECE PRESENT")
-            break
+            #print("UNSOLVED PIECE PRESENT")
 
     return return_letters
 
@@ -101,9 +122,34 @@ def find_significant_pos(current_piece, significant_pos):
         next_pos = "through"
     return next_pos
 
+def find_unsolved_piece(cube):
+    unsolved_piece_found = False
+    unsolved_piece_position = ''
+    x,y,z = 0,0,0
+    current_position = (x, y, z)
+    current_piece = cube.get_piece(current_position)
+    while not unsolved_piece_found:
+        # get where the piece should be
+        desired_position = dict.corner_piece_to_position[str(current_piece)]
+        # if not in spot piece is unsolved
+        if desired_position != current_position:
+            unsolved_piece_found = True
+            unsolved_piece_position = current_position
+            break
+        # else go to next position
+        current_position = next_corner_position(current_position)
+        if current_position == None:
+            return None
+
+    if unsolved_piece_found:
+        return unsolved_piece_position
+    else:
+        return None
+
+
 # finds next position to check through each corner
 def next_corner_position(current_position):
-    x,y,z = current_position
+    x,y,z = 0,0,0
     if current_position[2] == 0:
         z = 2
     elif current_position[1] == 0 and current_position[2] == 2:
@@ -113,8 +159,6 @@ def next_corner_position(current_position):
         x = 2
         y = 0
         z = 0
-    else:
-        x = 2
-        y = 2
-        z = 2
+    elif current_position[0] == 2 and current_position[1] == 2 and current_position[2] == 2:
+        return None
     return (x,y,z)

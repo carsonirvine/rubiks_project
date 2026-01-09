@@ -4,7 +4,7 @@ import dictionaries as dict
 # Finds the corner sequence
 def solve_edges(cube):
     solved = False
-    parity = False
+    unsolved_pieces_present = False
     # initialize position, piece, and significant side
     current_x = 2
     current_y = 2
@@ -27,18 +27,18 @@ def solve_edges(cube):
         # check if done or unsolved pieces present
         if return_letters[-1] in ("B"):
             solved = True
-            print("\nSUCCESS\n")
+            #print("\nSUCCESS\n")
             # delete last 'E' letter
             del return_letters[-1]
             break
         # unsolved pieces present
         elif return_letters[-1] in ("M"):
-            parity = True
+            unsolved_pieces_present = True
 
             # TEMPORARY SO THE PROGRAM TERMINATES
             solved = True
 
-            print("UNSOLVED PIECE PRESENT")
+            #print("UNSOLVED PIECE PRESENT")
             break
 
     return return_letters

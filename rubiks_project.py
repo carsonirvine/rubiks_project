@@ -26,6 +26,6 @@ corner_sequence = corners.solve_corners(cube)
 
 print(f"\n\nCORNER SEQUENCE\n\n {corner_sequence}")
 
-edge_sequence = edges.solve_edges(cube)
+#edge_sequence = edges.solve_edges(cube)
 
-print(f"\n\nEDGE SEQUENCE\n\n {edge_sequence}")
+#print(f"\n\nEDGE SEQUENCE\n\n {edge_sequence}")
