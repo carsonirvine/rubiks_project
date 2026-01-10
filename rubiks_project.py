@@ -13,7 +13,7 @@ cube = magiccube.Cube(3,"WWWWWWWWWOOOOOOOOOGGGGGGGGGRRRRRRRRRBBBBBBBBBYYYYYYYYY"
 
 solver = BasicSolver(cube)
 
-printing.print_all_pieces(cube)
+#printing.print_all_pieces(cube)
 scramble = Scramble(20, moves)
 print(f"Scramble: {scramble.scramble}")
 

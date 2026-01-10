@@ -14,3 +14,33 @@ If x is 1 then there will only be maximum two letters because in the core column
 If numbers contains only 0s or 2s its a corner.
 If contains one 1 its a edge
 If it has multiple 1s its a center piece
+
+
+Home piece locations: 
+piece 0,0,0:  OYB
+piece 0,0,1:  OY
+piece 0,0,2:  OYG
+piece 0,1,0:  OB
+piece 0,1,1:  O
+piece 0,1,2:  OG
+piece 0,2,0:  OWB
+piece 0,2,1:  OW
+piece 0,2,2:  OWG
+piece 1,0,0:  YB
+piece 1,0,1:   Y
+piece 1,0,2:  YG
+piece 1,1,0:  B
+piece 1,1,1:  None
+piece 1,1,2:  G
+piece 1,2,0:  WB
+piece 1,2,1:  W
+piece 1,2,2:  WG
+piece 2,0,0:  RYB
+piece 2,0,1:  RY
+piece 2,0,2:  RYG
+piece 2,1,0:  RB
+piece 2,1,1:  R
+piece 2,1,2:  RG
+piece 2,2,0:  RWB
+piece 2,2,1:  RW
+piece 2,2,2:  RWG
