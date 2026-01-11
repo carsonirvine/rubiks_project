@@ -18,7 +18,7 @@ def solve_edges(cube):
     while not solved:
         # get  piece and add to list
         current_piece = cube.get_piece(current_position)
-        print(f"ABOUT TO APPEND, current_position: {current_position}, significant_pos: {significant_pos}, piece: {current_piece}, letter: {convert_piece_to_letter(current_piece, significant_pos, current_position)}")
+        print(f"COONVERTING TO LETTER: Piece: {current_piece}, sig_pos: {significant_pos}, current position: {current_position}, letter: {convert_piece_to_letter(current_piece, significant_pos, current_position)}")
         return_letters.append(convert_piece_to_letter(current_piece, significant_pos, current_position))
         # Visit position after appending letter
         visit(visited_positions, current_position)
@@ -29,22 +29,18 @@ def solve_edges(cube):
             unsolved_pos = find_unsolved_piece(cube, visited_positions)
             temp_sig_pos = "horizontal"
             
-            print(f"Letter is M, last letter is {return_letters[-1]}")
             if unsolved_pos is None:
                 solved = True
                 break
             else: 
-                print("Still unsolved")
                 current_position = unsolved_pos
                 significant_pos = find_significant_pos(current_piece, temp_sig_pos, current_position)
-                print(f"Position: {current_position}, significant_pos: {significant_pos}, piece: {cube.get_piece(current_position)}")
                 something_done = True
         elif convert_piece_to_letter(current_piece, significant_pos, current_position) == "B":
             # delete last 'E' letter
             del return_letters[-1]
             unsolved_pos = find_unsolved_piece(cube, visited_positions)
             temp_sig_pos = "horizontal"
-            print("Return letter is B")
             if unsolved_pos is None:
                 solved = True
                 
@@ -58,10 +54,8 @@ def solve_edges(cube):
             if visited_positions[current_position] == 2 and current_position != starting_position and not something_done:
                 unsolved_pos = find_unsolved_piece(cube, visited_positions)
                 temp_sig_pos = "horizontal"
-                print(f"in visited pos, current_position: {current_position}, significant_pos: {significant_pos}, piece: {current_piece}")
                 if unsolved_pos is None:
                     solved = True
-                    print("VISITED POSITIONS OVER 2")
                     break
                 else:
                     current_position = unsolved_pos
@@ -69,10 +63,12 @@ def solve_edges(cube):
                     something_done = True
                 solved = False
         except:
-            print("visited_positions[current_position] == 2 key error")
+            print("")
         if not something_done:
             current_position = find_next_position(current_piece)
+            print(f"Sig pos: {significant_pos}, piece: {current_piece}, pos: {current_position}")
             significant_pos = find_significant_pos(current_piece, significant_pos, current_position)
+            print(f"Sig pos: {significant_pos}")
         something_done = False
     return return_letters
 
@@ -116,7 +112,6 @@ def convert_piece_to_letter(piece, significant_pos, position):
 
     # search dict for matching letter
     letter = dict.edge_piece_to_letter[piece_colors]
-    #print(f"Sig Pos: {significant_pos}, letter: {letter}\n")
     return letter
 
 # returns the position for the next piece
@@ -133,7 +128,7 @@ def find_significant_pos(current_piece, significant_pos, position):
     # find relevant color
     if significant_pos == "vertical":
         # if no R or O then W or Y will be first letter
-        if position[0] not in (0,2):
+        if position[1] not in (0,2):
             color = str(current_piece)[0]
         else:
             color = str(current_piece)[1]
@@ -151,7 +146,6 @@ def find_significant_pos(current_piece, significant_pos, position):
         next_pos = "vertical"
     elif color == "B" or color == "G":
         next_pos = "through"
-    #print(f"Significant pos: {next_pos}\n")
     return next_pos
 
 # Finds the position of the next unsolved piece, returns none if no unsolved piece

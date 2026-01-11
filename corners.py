@@ -15,17 +15,17 @@ def solve_corners(cube):
 
 
     # while not solved keep looking
+    #while not solved:
     while not solved:
         current_piece = cube.get_piece(current_position)
         return_letters.append(convert_piece_to_letter(current_piece, significant_pos))
-        print(f"\nPOSITION: {current_position}, LETTERS: {return_letters}")
         visit(visited_positions, current_position)
+        
         # if current piece is A or R then corner is twisted
         if convert_piece_to_letter(current_piece, significant_pos) in ("A", "R"):
             del return_letters[-1]
             unsolved_piece = find_unsolved_piece(cube, visited_positions)
-            if unsolved_piece is None:
-                print("Letter in A R")
+            if unsolved_piece is None and convert_piece_to_letter(cube.get_piece(starting_position), "horizontal") == "E":
                 solved = True
                 break
             else: 
@@ -39,7 +39,6 @@ def solve_corners(cube):
             unsolved_piece = find_unsolved_piece(cube, visited_positions)
             if unsolved_piece is None:
                 solved = True
-                print("Return letter in E")
                 break
             else: 
                 current_position = unsolved_piece
@@ -49,22 +48,22 @@ def solve_corners(cube):
         try:
             if visited_positions[current_position] == 2 and current_position != starting_position:
                 unsolved_piece = find_unsolved_piece(cube, visited_positions)
+                print(f"Visited positions is 2, unsolved piece is {unsolved_piece}")
                 if unsolved_piece is None:
+                    print("Visited positions is 2 and unsolved piece is none")
                     solved = True
-                    print("VISITED POSITIONS OVER 2")
                     break
-                    raise RuntimeError("Unsolved piece is None on line 45")
                 else:
                     current_position = unsolved_piece
                     significant_pos = find_significant_pos(current_piece, "horizontal")
                     something_done = True
                 solved = False
         except:
-            #raise RuntimeError("visited_positions[current_position] == 2 key error")
-            print("visited_positions[current_position] == 2 key error")
+            print("")
         if not something_done:
             current_position = find_next_position(current_piece)
             significant_pos = find_significant_pos(current_piece, significant_pos)
+            
         something_done = False
 
         

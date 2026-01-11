@@ -14,20 +14,19 @@ cube = magiccube.Cube(3,"WWWWWWWWWOOOOOOOOOGGGGGGGGGRRRRRRRRRBBBBBBBBBYYYYYYYYY"
 solver = BasicSolver(cube)
 
 #printing.print_all_pieces(cube)
-#scramble = Scramble(20, moves)
+scramble = Scramble(20, moves)
 #print(f"Scramble: {scramble.scramble}")
 
 
 #cube.rotate(scramble.scramble)
-print(f"Scramble: D2 L' D2 R F' L' F L U2 L' F L' D2 R2 U2 L' D' L U' L")
-cube.rotate("D2 L' D2 R F' L' F L U2 L' F L' D2 R2 U2 L' D' L U' L")
+print(f"Scramble: B' D L' U' L' D2 R2 U' L B' R' F2 D' R' F U2 R F D' R")
+cube.rotate("B' D L' U' L' D2 R2 U' L B' R' F2 D' R' F U2 R F D' R")
 print(cube)
 
-
-#corner_sequence = corners.solve_corners(cube)
-
-#print(f"\n\nCORNER SEQUENCE\n\n {corner_sequence}")
-
 edge_sequence = edges.solve_edges(cube)
+corner_sequence = corners.solve_corners(cube)
 
-print(f"\n\nEDGE SEQUENCE\n\n {edge_sequence}")
+print(f"\nEDGE SEQUENCE:\n {edge_sequence}")
+if len(edge_sequence) % 2 != 0:
+    print("\nPARITY Ra PERM REQUIRED")
+print(f"\nCORNER SEQUENCE:\n {corner_sequence}")
