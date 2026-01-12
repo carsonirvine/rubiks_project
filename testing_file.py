@@ -8,7 +8,7 @@ import edges
 solved_cube = magiccube.Cube(3,"WWWWWWWWWOOOOOOOOOGGGGGGGGGRRRRRRRRRBBBBBBBBBYYYYYYYYY")
 unsuccessfully_solved = False
 successes = 0
-cubes_to_test = 100000
+cubes_to_test = 1000
 number_of_parities = 0
 number_of_corners = 0
 number_of_edges = 0

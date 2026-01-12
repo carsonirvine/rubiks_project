@@ -23,7 +23,7 @@ def solve_corners(cube):
         if convert_piece_to_letter(current_piece, significant_pos) in ("A", "R"):
             del return_letters[-1]
             unsolved_piece = find_unsolved_piece(cube, visited_positions)
-            if unsolved_piece is None and convert_piece_to_letter(cube.get_piece(starting_position), "horizontal") == "E":
+            if unsolved_piece is None:
                 solved = True
                 break
             else: 
@@ -135,18 +135,24 @@ def find_significant_pos(current_piece, significant_pos):
 
 # Finds the position of the next unsolved piece, returns none if no unsolved piece
 def find_unsolved_piece(cube, visited_positions):
+    # select all corners not visited from the position list
     unseen_corners = [pos for pos in dict.corner_position_list if pos not in visited_positions]
     for corner in unseen_corners:
+        # set current corner position
         current_position = corner
+        # get piece
         current_piece = cube.get_piece(current_position)
+        # if none then skip
         if current_piece is None:
             continue
         desired_position = dict.corner_piece_to_position[str(current_piece)]
+        # if not in desired location then piece is unsolved
         if current_position != desired_position:
             unsolved_piece_position = current_position
             return unsolved_piece_position
+        # else if letters in this order piece must be flipped but in correct location
         elif str(current_piece)[0] not in ("R", "O") or str(current_piece)[1] not in ("Y", "W") or str(current_piece)[2] not in ("B", "G"):
             unsolved_piece_position = current_position
             return unsolved_piece_position
-
+    # if no unsolved pieces return none
     return None    

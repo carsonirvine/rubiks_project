@@ -150,18 +150,26 @@ def find_significant_pos(current_piece, significant_pos, position):
 
 # Finds the position of the next unsolved piece, returns none if no unsolved piece
 def find_unsolved_piece(cube, visited_positions):
+    # select all edges not visited from the position list
     unseen_edges = [pos for pos in dict.edge_position_list if pos not in visited_positions]
+    # loop through unseen edges
     for edge in unseen_edges:
+        # set current edge position
         current_position = edge
+        # get piece
         current_piece = cube.get_piece(current_position)
+        # if none then skip
         if current_piece is None:
             continue
+        # find the desired location of the piece
         desired_position = dict.edge_piece_to_position[str(current_piece)]
+        # if not in desired location then piece is unsolved
         if current_position != desired_position:
             unsolved_piece_position = current_position
             return unsolved_piece_position
+        # else if letters in this order piece must be flipped but in correct location
         elif str(current_piece)[0] in ("G", "B") or str(current_piece)[1] in ("O", "R"):
             unsolved_piece_position = current_position
             return unsolved_piece_position
-
+    # if no unsolved pieces return none
     return None    
