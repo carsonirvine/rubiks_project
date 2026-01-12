@@ -65,9 +65,10 @@ def solve_edges(cube):
         except:
             print("")
         if not something_done:
-            current_position = find_next_position(current_piece)
+            
             print(f"Sig pos: {significant_pos}, piece: {current_piece}, pos: {current_position}")
             significant_pos = find_significant_pos(current_piece, significant_pos, current_position)
+            current_position = find_next_position(current_piece)
             print(f"Sig pos: {significant_pos}")
         something_done = False
     return return_letters
@@ -128,7 +129,7 @@ def find_significant_pos(current_piece, significant_pos, position):
     # find relevant color
     if significant_pos == "vertical":
         # if no R or O then W or Y will be first letter
-        if position[1] not in (0,2):
+        if position[0] not in (0,2):
             color = str(current_piece)[0]
         else:
             color = str(current_piece)[1]

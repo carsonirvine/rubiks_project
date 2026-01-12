@@ -15,12 +15,14 @@ solver = BasicSolver(cube)
 
 #printing.print_all_pieces(cube)
 scramble = Scramble(20, moves)
-print(f"Scramble: {scramble.scramble}")
+#print(f"Scramble: {scramble.scramble}")
+#cube.rotate(scramble.scramble)
 
 
-cube.rotate(scramble.scramble)
-#print(f"Scramble: B' D L' U' L' D2 R2 U' L B' R' F2 D' R' F U2 R F D' R")
-#cube.rotate("B' D L' U' L' D2 R2 U' L B' R' F2 D' R' F U2 R F D' R")
+print(f"Scramble: B L2 U2 R B L F' U L F2 U L D L' U2 L' F U2 R' B")
+cube.rotate("B L2 U2 R B L F' U L F2 U L D L' U2 L' F U2 R' B")
+
+
 print(cube)
 
 edge_sequence = edges.solve_edges(cube)
