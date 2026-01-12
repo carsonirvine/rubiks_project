@@ -57,7 +57,7 @@ def solve_corners(cube):
                     something_done = True
                 solved = False
         except:
-            print("")
+            pass
         if not something_done:
             current_position = find_next_position(current_piece)
             significant_pos = find_significant_pos(current_piece, significant_pos)

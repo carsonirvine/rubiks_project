@@ -62,7 +62,7 @@ def solve_edges(cube):
                     something_done = True
                 solved = False
         except:
-            print("")
+            pass
         if not something_done:
             
             #print(f"Sig pos: {significant_pos}, piece: {current_piece}, pos: {current_position}")

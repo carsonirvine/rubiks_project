@@ -4,6 +4,10 @@ import dictionaries as dict
 import corners
 import edges
 
+# Solved cube state for solve comparison
+solved_cube = magiccube.Cube(3,"WWWWWWWWWOOOOOOOOOGGGGGGGGGRRRRRRRRRBBBBBBBBBYYYYYYYYY")
+successfully_solved = False
+
 # 3x3 Cube with normal colour scheme and white top green front
 cube = magiccube.Cube(3,"WWWWWWWWWOOOOOOOOOGGGGGGGGGRRRRRRRRRBBBBBBBBBYYYYYYYYY")
 
@@ -31,14 +35,14 @@ if len(edge_sequence) % 2 != 0:
 print(f"\nCORNER SEQUENCE:\n {corner_sequence}")
 
 # Solves the edges
-#for edge in edge_sequence:
-#    cube.rotate(dict.edge_setup_moves[edge])
-#    cube.rotate(dict.algorithms["edge_swap"])
-#    cube.rotate(dict.edge_unsetup_moves[edge])
+for edge in edge_sequence:
+    cube.rotate(dict.edge_setup_moves[edge])
+    cube.rotate(dict.algorithms["edge_swap"])
+    cube.rotate(dict.edge_unsetup_moves[edge])
 
 # if the parity algorithm is required
-#if parity:
-#    cube.rotate(dict.algorithms["parity"])
+if parity:
+    cube.rotate(dict.algorithms["parity"])
 
 # Solves the corners
 for corner in corner_sequence:
@@ -46,5 +50,9 @@ for corner in corner_sequence:
     cube.rotate(dict.algorithms["corner_swap"])
     cube.rotate(dict.corner_unsetup_moves[corner])
 
-# Print the cube
-print(cube)
+# if cube is back to solved state print and update var
+if str(cube) == str(solved_cube):
+    successfully_solved = True
+    print("\n SUCCESS")
+else:
+    print("\nUNSUCCESSFUL")
