@@ -1,4 +1,3 @@
-import magiccube
 import dictionaries as dict
 
 # Finds the corner sequence
@@ -9,8 +8,7 @@ def solve_corners(cube):
     solved = False
     something_done = False
     # initialize position, piece, and significant side
-    starting_position = (0,2,0)
-    current_position = starting_position
+    current_position = dict.corner_starting_position
     significant_pos = "horizontal"
 
 
@@ -46,11 +44,11 @@ def solve_corners(cube):
                 something_done = True
         # get next piece location, piece, and significant side data
         try:
-            if visited_positions[current_position] == 2 and current_position != starting_position:
+            if visited_positions[current_position] == 2 and current_position != dict.corner_starting_position:
                 unsolved_piece = find_unsolved_piece(cube, visited_positions)
-                print(f"Visited positions is 2, unsolved piece is {unsolved_piece}")
+                #print(f"Visited positions is 2, unsolved piece is {unsolved_piece}")
                 if unsolved_piece is None:
-                    print("Visited positions is 2 and unsolved piece is none")
+                    #print("Visited positions is 2 and unsolved piece is none")
                     solved = True
                     break
                 else:

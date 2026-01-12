@@ -1,4 +1,3 @@
-import magiccube
 import dictionaries as dict
 
 # Finds the corner sequence
@@ -8,8 +7,8 @@ def solve_edges(cube):
     return_letters = []
     visited_positions = {}
     # initialize position, piece, and significant side
-    starting_position = (2,2,1)
-    current_position = starting_position
+    
+    current_position = dict.edge_starting_position
     significant_pos = "vertical"
 
     
@@ -18,7 +17,7 @@ def solve_edges(cube):
     while not solved:
         # get  piece and add to list
         current_piece = cube.get_piece(current_position)
-        print(f"COONVERTING TO LETTER: Piece: {current_piece}, sig_pos: {significant_pos}, current position: {current_position}, letter: {convert_piece_to_letter(current_piece, significant_pos, current_position)}")
+        #print(f"COONVERTING TO LETTER: Piece: {current_piece}, sig_pos: {significant_pos}, current position: {current_position}, letter: {convert_piece_to_letter(current_piece, significant_pos, current_position)}")
         return_letters.append(convert_piece_to_letter(current_piece, significant_pos, current_position))
         # Visit position after appending letter
         visit(visited_positions, current_position)
@@ -51,7 +50,7 @@ def solve_edges(cube):
                 something_done = True
         
         try:
-            if visited_positions[current_position] == 2 and current_position != starting_position and not something_done:
+            if visited_positions[current_position] == 2 and current_position != dict.edge_starting_position and not something_done:
                 unsolved_pos = find_unsolved_piece(cube, visited_positions)
                 temp_sig_pos = "horizontal"
                 if unsolved_pos is None:
@@ -66,10 +65,10 @@ def solve_edges(cube):
             print("")
         if not something_done:
             
-            print(f"Sig pos: {significant_pos}, piece: {current_piece}, pos: {current_position}")
+            #print(f"Sig pos: {significant_pos}, piece: {current_piece}, pos: {current_position}")
             significant_pos = find_significant_pos(current_piece, significant_pos, current_position)
             current_position = find_next_position(current_piece)
-            print(f"Sig pos: {significant_pos}")
+            #print(f"Sig pos: {significant_pos}")
         something_done = False
     return return_letters
 

@@ -182,7 +182,51 @@ edge_piece_to_position = {
     "RW": (2,2,1), "WR": (2,2,1)
 }
 
+# List of all corner position coordinates
 corner_position_list = [(0,0,0),(0,0,2),(0,2,0),(0,2,2),(2,0,0),(2,0,2),(2,2,0),(2,2,2)]
 
+# List of all edge position coordinates
 edge_position_list = [(0,0,1),(0,1,0),(0,1,2),(0,2,1),(1,0,0),(1,0,2),(1,2,0),
                       (1,2,2),(2,0,1),(2,1,0),(2,1,2),(2,2,1)]
+
+# Alphabet of moves
+moves = ["R","R'","R2","L","L'","L2","U","U'","U2","D","D'",
+         "D2","F","F'","F2","B","B'","B2"]
+
+# Edge starting position
+edge_starting_position = (2,2,1)
+
+# Corner starting position
+corner_starting_position = (0,2,0)
+
+# all setup moves for corner pieces
+corner_setup_moves = {
+    "B": "R2",
+    "C":"F2 D",
+    "D": "F2",
+    "F": "F' D",
+    "G": "F'",
+    "H": "D' R",
+    "I": "F R'",
+    "J": "R'",
+    "K": "F' R'",
+    "L": "F2 R'",
+    "M": "F",
+    "N": "R' F",
+    "O": "R2 F",
+    "P": "R F",
+    "Q": "R D'",
+    "S": "D F'",
+    "T": "R",
+    "U": "D",
+    "V": "",
+    "W": "D'",
+    "X": "D2"
+}
+
+# dictionary of all algorithms this method requires
+algorithms = {
+    "edge_swap": "R U R' U' R' F R2 U' R' U' R U R' F'",
+    "corner_swap": "R U' R' U' R U R' F' R U R' U' R' F R",
+    "parity": "R U' R' U' R U R D R' U' R D' R' U2 R' U'"
+}
