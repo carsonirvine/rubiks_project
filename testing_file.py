@@ -7,10 +7,13 @@ import edges
 # Solved cube state for solve comparison
 solved_cube = magiccube.Cube(3,"WWWWWWWWWOOOOOOOOOGGGGGGGGGRRRRRRRRRBBBBBBBBBYYYYYYYYY")
 unsuccessfully_solved = False
+successes = 0
+cubes_to_test = 100000
+number_of_parities = 0
+number_of_corners = 0
+number_of_edges = 0
 
-
-
-for i in range (0, 100):
+for i in range (0, cubes_to_test):
     # 3x3 Cube with normal colour scheme and white top green front
     cube = magiccube.Cube(3,"WWWWWWWWWOOOOOOOOOGGGGGGGGGRRRRRRRRRBBBBBBBBBYYYYYYYYY")
     # generate a scramble object from the move alphabet and  normal length
@@ -24,8 +27,14 @@ for i in range (0, 100):
 
     # calculate the edge sequence
     edge_sequence = edges.solve_edges(cube)
+    # add edge count to average
+    number_of_edges += len(edge_sequence)
+
     # calculate the corner sequence
     corner_sequence = corners.solve_corners(cube)
+    # add edge count to average
+    number_of_corners += len(corner_sequence)
+
     # Is the parity algorithm required
     parity = False
 
@@ -45,6 +54,7 @@ for i in range (0, 100):
     # if the parity algorithm is required
     if parity:
         cube.rotate(dict.algorithms["parity"])
+        number_of_parities += 1
 
     # Solves the corners
     for corner in corner_sequence:
@@ -54,12 +64,13 @@ for i in range (0, 100):
 
     # if cube is back to solved state print and update var
     if str(cube) == str(solved_cube):
-        print("SUCCESS")
+        successes += 1
+        print(f"SUCCESS #{successes}")
     else:
         unsuccessfully_solved = True
         print("UNSUCCESSFUL")
 
-if unsuccessfully_solved:
-    print("\n\n NOT A SUCCESS")
-else:
-    print("ALL 100 SUCCESS")
+print(f"Number of successes: {successes}/{cubes_to_test}")
+print(f"Number of parities: {number_of_parities}/{cubes_to_test}")
+print(f"Average number of edge swaps: {number_of_edges/cubes_to_test}")
+print(f"Average number of corner swaps: {number_of_corners/cubes_to_test}")

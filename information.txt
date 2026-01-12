@@ -15,7 +15,6 @@ If numbers contains only 0s or 2s its a corner.
 If contains one 1 its a edge
 If it has multiple 1s its a center piece
 
-
 Home piece locations: 
 piece 0,0,0:  OYB
 piece 0,0,1:  OY
@@ -45,9 +44,19 @@ piece 2,2,0:  RWB
 piece 2,2,1:  RW
 piece 2,2,2:  RWG
 
-
-
 CORNERS DONT CHECK IF EVERYTHING IS SOLVED FULLY EVERY TIME:
 L2 B U L' U' L' U2 L D2 R' U L F U R2 U' R2 U2 R F
 
 SAME CRAMBLE ALSO PICKED THE LETTER FROM M POSITION INSTEAD OF B AGAIN
+
+After running solving on 10000 cubes:
+Number of successes: 10000/10000
+Number of parities: 4985/10000
+Average number of edge swaps: 12.0699
+Average number of corner swaps: 8.1379
+
+After running solving on 100000 cubes:
+Number of successes: 100000/100000
+Number of parities: 49937/100000
+Average number of edge swaps: 12.07321
+Average number of corner swaps: 8.1276
