@@ -1,25 +1,35 @@
 import magiccube
-from scramble import Scramble
-import dictionaries as dict
-import corners
-import edges
+from magiccube.cube_base import Face
+from Scramble.scramble import Scramble
+import Data.constants as dict
+import Solving.corners as corners
+import Solving.edges as edges
 class Blind_Solver():
-    def __init__(self, mode):
+    def __init__(self, mode, scramble=""):
         self.mode = mode
         self.output = ""
+        self.scramble = scramble
+        if self.scramble == "":
+            self.random_scramble = True
+        else:
+            self.random_scramble = False
     
     def solve(self):
         cube = magiccube.Cube(3,"WWWWWWWWWOOOOOOOOOGGGGGGGGGRRRRRRRRRBBBBBBBBBYYYYYYYYY")
-
         # generate a scramble object from the move alphabet and  normal length
         scramble = Scramble(20, dict.moves)
         # print the scramble
-        self.output += (f"Scramble: {scramble.scramble}")
-        # scramble the cube
-        cube.rotate(scramble.scramble)
+        if self.random_scramble:
+            self.output += (f"Random Scramble: {scramble.scramble}")
+            # scramble the cube
+            cube.rotate(scramble.scramble)
+        else:
+            self.output += (f"Inputted Scramble: {self.scramble}")
+            # scramble the cube
+            cube.rotate(self.scramble)
+            
         # print the current state of the cube for reference
-        self.output += '\n\n'+(str(cube))
-
+        self.output += self.cube_to_html(cube)
         # calculate the edge sequence
         edge_sequence = edges.solve_edges(cube)
         # calculate the corner sequence
@@ -31,7 +41,7 @@ class Blind_Solver():
         if self.mode == "edges" or self.mode == "both":
             self.output += '\n'+(f"EDGE SEQUENCE:\n {edge_sequence}")
             # if odd number of edge and corner moves the parity algorithm is required
-            if len(edge_sequence) % 2 != 0:
+            if len(edge_sequence) % 2 != 0 and self.mode == "both":
                 parity = True
                 self.output += '\n'+("\nPARITY Ra PERM REQUIRED")
         if self.mode == "corners" or self.mode == "both":
@@ -57,3 +67,39 @@ class Blind_Solver():
                 cube.rotate(dict.corner_unsetup_moves[corner])
         
         return self.output
+    
+    def cube_to_html(self, cube):
+        faces = cube.get_all_faces()
+
+        # Map face to position in the 3x12 grid (row, col_start)
+        face_positions = {
+            Face.U: (0, 3),   # top row, starting at col 3
+            Face.L: (3, 0),   # middle row, starting col 0
+            Face.F: (3, 3),   # middle row, starting col 3
+            Face.R: (3, 6),   # middle row, starting col 6
+            Face.B: (3, 9),   # middle row, starting col 9
+            Face.D: (6, 3),   # bottom row, starting col 3
+        }
+
+        # Create a 9-row x 12-col grid to hold all squares
+        html = '<div style="display:grid; grid-template-columns: repeat(12, 20px); grid-auto-rows: 20px; gap:4px;">'
+
+        # Initialize empty grid
+        grid = [[None for _ in range(12)] for _ in range(9)]
+
+        # Fill grid with face colors
+        for face, (row_start, col_start) in face_positions.items():
+            face_2d = faces[face]
+            for i, row_cells in enumerate(face_2d):
+                for j, color_obj in enumerate(row_cells):
+                    grid[row_start + i][col_start + j] = dict.color_map[color_obj.name]
+
+        # Render grid
+        for row in grid:
+            for color in row:
+                if color:
+                    html += f'<span style="width:20px; height:20px; display:inline-block; background-color:{color}; border:1px solid black;"></span>'
+                else:
+                    html += '<span style="width:20px; height:20px; display:inline-block;"></span>'
+        html += '</div>'
+        return html

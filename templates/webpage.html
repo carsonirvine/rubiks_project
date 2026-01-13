@@ -12,36 +12,33 @@
   <option value="corners">Corners</option>
   <option value="both">Both</option>
 </select>
-<br><br>
+<label for="scramble">Input own scramble, will be random if not:</label>
+<input type="text" id="scramble" value=""><br><br>
 
-<!-- Button is outside a form to prevent page reload -->
 <button type="button" onclick="solve()">Solve</button>
 
 <hr>
 
-<!-- This is where the output will appear -->
 <pre id="output"></pre>
 
 <script>
 function solve() {
     const mode = document.getElementById("states").value;
-    const outputElement = document.getElementById("output"); // THIS LINE WAS MISSING
-
-    // Clear previous output
+    const outputElement = document.getElementById("output");
+    const scramble = document.getElementById("scramble").value
     outputElement.innerText = "Solving...";
 
     fetch("/solve", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ mode: mode })
+        body: JSON.stringify({ mode: mode, scramble: scramble})
     })
     .then(res => res.json())
     .then(data => {
-        // Update the page literally
-        outputElement.innerText = data.result; 
+        outputElement.innerHTML = data.result;
     })
     .catch(err => {
-        outputElement.innerText = "Error: " + err;
+        outputElement.innerHTML = "Error: " + err;
     });
 }
 </script>

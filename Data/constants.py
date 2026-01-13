@@ -307,3 +307,12 @@ algorithms = {
     "corner_swap": "R U' R' U' R U R' F' R U R' U' R' F R",
     "parity": "R U' R' U' R U R D R' U' R D' R' U2 R' U'"
 }
+
+color_map = {
+    "W": "white",
+    "O": "orange",
+    "G": "green",
+    "R": "red",
+    "B": "blue",
+    "Y": "yellow"
+}

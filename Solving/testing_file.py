@@ -1,8 +1,8 @@
 import magiccube
-from scramble import Scramble
-import dictionaries as dict
-import corners
-import edges
+from Scramble.scramble import Scramble
+import Data.constants as dict
+import Solving.corners as corners
+import Solving.edges as edges
 
 # Solved cube state for solve comparison
 solved_cube = magiccube.Cube(3,"WWWWWWWWWOOOOOOOOOGGGGGGGGGRRRRRRRRRBBBBBBBBBYYYYYYYYY")
