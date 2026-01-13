@@ -32,19 +32,47 @@ class Scramble:
     # based on last move chooses next move. 
     # Cant have two same side moves in a row
     def pick_move_num(self, previous_move): 
-        # if move was above 2/3 cant be again
-        if previous_move > 11:
-            return random.randrange(0,11)
-        # if move was middle third cant be again
-        elif previous_move > 5:
+        # If was B cant again
+        if previous_move > 14:
+            return random.randrange(0,14)
+        
+        # If was F cant again
+        elif previous_move > 11:
             # random to determine if above or bellow middle
-            temp_random = random.randrange(0,1)
-            if temp_random == 1:
+            temp_random = random.randrange(1,5)
+            if temp_random > 4:
+                return random.randrange(15, 17)
+            else:
+                return random.randrange(0,11)
+        
+        # If was D cant again
+        elif previous_move > 8:
+            # random to determine if above or bellow middle
+            temp_random = random.randrange(1,5)
+            if temp_random > 3:
                 return random.randrange(12, 17)
             else:
+                return random.randrange(0,8)    
+
+        # If was U cant be again
+        elif previous_move > 5:
+            # random to determine if above or bellow middle
+            temp_random = random.randrange(1,5)
+            if temp_random > 2:
+                return random.randrange(9, 17)
+            else:
                 return random.randrange(0,5)
-        # must be from first third, choose from last two
+
+        # If was L cant be again
+        elif previous_move > 2:
+            # random to determine if above or bellow middle
+            temp_random = random.randrange(1,5)
+            if temp_random > 1:
+                return random.randrange(6, 17)
+            else:
+                return random.randrange(0,2)
+        # If was R cant be again
         else:
-            return random.randrange(6,17)
+            return random.randrange(3,17)
 
     

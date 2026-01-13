@@ -1,39 +1,90 @@
 <!DOCTYPE html>
-<html>
-    <body style="background-color:rgb(246, 231, 248); font-size: 18px"></body>
+<html lang="en">
 <head>
-	<title>Blind Solver</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blind Solver</title>
+    <style>
+        body {
+            background-color: rgb(246, 231, 248);
+            font-size: 1rem; /* relative font size */
+            margin: 0;
+            padding: 1rem;
+            font-family: Arial, sans-serif;
+        }
+
+        label, select, input, button {
+            display: block;
+            width: 100%;
+            max-width: 400px; /* optional max width for larger screens */
+            margin-bottom: 1rem;
+            font-size: 1rem;
+        }
+
+        button {
+            padding: 0.75rem;
+            background-color: #6200ea;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #4500b5;
+        }
+
+        pre {
+            white-space: pre-wrap; /* wrap long output */
+            word-wrap: break-word;
+            background-color: #fff;
+            padding: 1rem;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            overflow-x: auto;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+    </style>
 </head>
-
 <body>
+<div class="container">
+    <label for="states">Choose whether you want the edges, corners, or whole cube to be solved:</label>
+    <select name="states" id="states">
+      <option value="both">Both</option>
+      <option value="edges">Edges</option>
+      <option value="corners">Corners</option>
+    </select>
 
-<label for="states">Choose whether you want the edges, corners, or whole cube to be solved:</label>
-<select name="states" id="states">
-  <option value="both">Both</option>
-  <option value="edges">Edges</option>
-  <option value="corners">Corners</option>
-</select>
-<br>
-<label for="scramble">Input scramble, will be random if not:</label>
-<input type="text" id="scramble" value=""><br><br>
+    <label for="scramble">Input scramble, will be random if not:</label>
+    <input type="text" id="scramble" value="">
 
-<button type="button" onclick="solve()">Solve</button>
+    <button type="button" onclick="solve()">Solve</button>
 
-<hr>
+    <hr>
 
-<pre id="output"></pre>
+    <pre id="output"></pre>
+</div>
 
 <script>
 function solve() {
     const mode = document.getElementById("states").value;
     const outputElement = document.getElementById("output");
-    const scramble = document.getElementById("scramble").value
+    const scramble_in = document.getElementById("scramble").value
     outputElement.innerText = "Solving...";
+
+    //convert apple fancy brackets to our brackets
+    iphone_scramble = scramble_in.replace(/[‘’]/g, "'").replace(/[“”]/g, '"');
 
     fetch("/solve", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ mode: mode, scramble: scramble})
+        body: JSON.stringify({ mode: mode, scramble: iphone_scramble})
     })
     .then(res => res.json())
     .then(data => {
