@@ -8,7 +8,7 @@ class Blind_Solver():
     def __init__(self, mode, scramble=""):
         self.mode = mode
         self.output = ""
-        self.scramble = scramble
+        self.scramble = scramble.upper()
         if self.scramble == "":
             self.random_scramble = True
         else:

@@ -7,7 +7,7 @@
     <style>
         body {
             background-color: rgb(246, 231, 248);
-            font-size: 1rem; /* relative font size */
+            font-size: 18px;
             margin: 0;
             padding: 1rem;
             font-family: Arial, sans-serif;
@@ -16,9 +16,9 @@
         label, select, input, button {
             display: block;
             width: 100%;
-            max-width: 400px; /* optional max width for larger screens */
+            max-width: 400px;
             margin-bottom: 1rem;
-            font-size: 1rem;
+            font-size: 20px;
         }
 
         button {
@@ -36,7 +36,7 @@
         }
 
         pre {
-            white-space: pre-wrap; /* wrap long output */
+            white-space: pre-wrap;
             word-wrap: break-word;
             background-color: #fff;
             padding: 1rem;
@@ -55,17 +55,17 @@
 <body>
 <div class="container">
     <label for="states">Choose whether you want the edges, corners, or whole cube to be solved:</label>
-    <select name="states" id="states">
-      <option value="both">Both</option>
-      <option value="edges">Edges</option>
-      <option value="corners">Corners</option>
-    </select>
+        <select name="states" id="states">
+            <option value="both">Both</option>
+            <option value="edges">Edges</option>
+            <option value="corners">Corners</option>
+        </select>
 
-    <label for="scramble">Input scramble, will be random if not:</label>
-    <input type="text" id="scramble" value="">
-
-    <button type="button" onclick="solve()">Solve</button>
-
+        <label for="scramble">Input scramble, will be random if not:</label>
+    <form id="scramble_form">
+        <input type="text" id="scramble" value="">
+        <button type="submit" onclick="solve()">Solve</button>
+    </form>
     <hr>
 
     <pre id="output"></pre>
@@ -73,6 +73,7 @@
 
 <script>
 function solve() {
+    event.preventDefault();
     const mode = document.getElementById("states").value;
     const outputElement = document.getElementById("output");
     const scramble_in = document.getElementById("scramble").value
