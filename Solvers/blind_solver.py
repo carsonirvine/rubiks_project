@@ -8,7 +8,10 @@ class Blind_Solver():
     def __init__(self, mode, scramble=""):
         self.mode = mode
         self.output = ""
-        self.scramble = scramble.upper()
+        # Convert all letters to upper and trim whitespace
+        self.scramble = scramble.upper().strip()
+        # Switch w to lower for wide moves
+        self.scramble = self.scramble.replace("W", "w")
         if self.scramble == "":
             self.random_scramble = True
         else:
