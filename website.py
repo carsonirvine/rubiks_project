@@ -1,6 +1,5 @@
 from flask import Flask, render_template, request, jsonify
 from Solvers.blind_solver import Blind_Solver
-import ngrok
 
 app = Flask(__name__)
 
@@ -23,7 +22,18 @@ def solve():
     scramble = data["scramble"]
 
     solver = Blind_Solver(mode, scramble)
-    output = solver.solve()
+    # Fails if scramble is invalid
+    try:
+        output = solver.solve()
+    # catch invalid scramble and output scramble outline
+    except:
+        output = "Invalid scramble, can only include:\
+        \n1. Normal moves like F, R', U2\
+        \n2. Wide moves like Lw, Rw', Uw2\
+        \n3. Rotations like X, Z', Y2\
+        \n(Solution will result in incorrect centers)\
+        \n4. Center moves like M, E', S2\
+        \n(Solution will result in incorrect centers)"
 
     return jsonify({"result": output})
 
